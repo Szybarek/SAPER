@@ -1,81 +1,85 @@
+#ifndef MINESBOARD_H__
+#define MINESBOARD_H__
+enum GameMode  { DEBUG, EASY, NORMAL, HARD };
+enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
 #include <iostream>
 
 using namespace std;
 
 void intro()
 {
-  cout << "Hubert Baron" << endl; 
+    cout << "Hubert Baron" << endl;
 }
 
 
- struct Field
+struct Field
 {
- bool hasMine;
- bool hasFlag;
- bool isRevealed;
+    bool hasMine;
+    bool hasFlag;
+    bool isRevealed;
 };
 
-class MinesweaperBoard
+class MinesweeperBoard
 {
-  Field board[100][100];
-  int width;
-  int height;
+    Field board[100][100];
+    int width;
+    int height;
 
-  public:
-  MinesweaperBoard();
-  void debug_display() const;
+public:
+    MinesweeperBoard(int w, int h, GameMode mode);
+
+    void debug_display() const;
 };
 
 
-//wartosc poczatkowych pol na nie ma miny, nie ma flagi, pole zakryte
-MinesweaperBoard::MinesweaperBoard() : width(10), height(10)
+
+MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode) : height(h), width(w)
 {
- for(int y = 0; y < height; y++)
- {
-   for(int x = 0; x < width; x++)
-   {
-    board[x][y].hasMine = false;
-    board[x][y].hasFlag = false;
-    board[x][y].isRevealed = false;
-   }
- }
- board[1][5].hasMine = true;
- board[2][6].hasFlag = true;
- board[2][7].hasFlag = true;
- board[3][6].isRevealed = true;
+    if(mode == EASY) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                board[x][y].hasMine = false;
+                board[x][y].hasFlag = false;
+                board[x][y].isRevealed = false;
+            }
+        }
+    }
 }
 
-void MinesweaperBoard::debug_display() const 
+void MinesweeperBoard::debug_display() const
 {
- for(int y = 0; y < height; y++)
- {
-   for(int x = 0; x < width; x++)
-   {
-      cout << "[";
-      if(board[x][y].hasMine)
-        cout << "M";
-      else
-       cout << ".";
-        if(board[x][y].isRevealed)
-        cout << "o";
-      else
-       cout << ".";
-         if(board[x][y].hasFlag)
-        cout << "f";
-      else
-       cout << ".";
-       cout << "]";
-   }
-   cout << endl;
- }
+    for(int y = 0; y < height; y++)
+    {
+        for(int x = 0; x < width; x++)
+        {
+            cout << "[";
+            if(board[x][y].hasMine)
+                cout << "M";
+            else
+                cout << ".";
+            if(board[x][y].isRevealed)
+                cout << "o";
+            else
+                cout << ".";
+            if(board[x][y].hasFlag)
+                cout << "f";
+            else
+                cout << ".";
+            cout << "]";
+        }
+        cout << endl;
+    }
 }
 
 
 
-int main() 
+int main()
 {
-  MinesweaperBoard start;
-  intro();
-  start.debug_display();
-  return 0;
+    MinesweeperBoard start(10,20,EASY);
+    intro();
+    start.debug_display();
+    cout << endl;
+    return 0;
 }
+
+#endif
