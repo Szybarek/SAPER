@@ -73,18 +73,27 @@ bool MinesweeperBoard::hasFlag(int row, int col) const
 
 MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode) : height(h), width(w)
 {
-  if(mode == EASY) 
-  {
-    //tu bedzie kiedys instrukcja + wiecej trybow trudnosci
-    srand(time(NULL));
-    int r1 = (rand() % h ) + 0 ;
-    int r2 = (rand() % h ) + 0 ;
-    for (int y = 0; y < height; y++) 
+ if(mode == EASY) 
+ {
+   //tu bedzie kiedys instrukcja + wiecej trybow trudnosci
+   for(int y = 0; y < height; y++) 
     {
-      for (int x = 0; x < width; x++) 
+     for(int x = 0; x < width; x++) 
       {
-      board[r1][r2].hasMine = true;
+       board[x][y].hasMine = false;
       }
+    }
+   srand(time(NULL));
+   for(int t = 0; t < h; t++)
+    {
+     int r1 = rand()%h;
+     int r2 = rand()%h;
+      while(board[r1][r2].hasMine)
+      {
+       r1 = rand()%h;
+       r2 = rand()%h;
+      }
+      board[r1][r2].hasMine = true;
     }
   }
 }
@@ -118,7 +127,7 @@ void MinesweeperBoard::debug_display() const
 
 int main()
 {
-    MinesweeperBoard start(10, 10, EASY);
+    MinesweeperBoard start(20, 20, EASY);
     intro();
     start.debug_display();
     cout << "Liczba min dookola tego pola: " << start.countMines(2, 1) << endl;
