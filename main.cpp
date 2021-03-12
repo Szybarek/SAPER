@@ -3,6 +3,7 @@
 enum GameMode  { DEBUG, EASY, NORMAL, HARD };
 enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
 #include <iostream>
+#include<ctime>
 
 
 using namespace std;
@@ -29,6 +30,7 @@ class MinesweeperBoard
 public:
     MinesweeperBoard(int w, int h, GameMode mode);
     int countMines(int row, int col) const;  
+    bool hasFlag(int row, int col) const;
     void debug_display() const;
     int getMineCount() const;
 };
@@ -38,7 +40,7 @@ int MinesweeperBoard::countMines(int row, int col) const
 {
   //trzeba napisac funkcje ktora sprawia ze nie mozna wyjsc poza border tablicy (inaczej program dla pól które graniczą z borderem podaje błędne wartości)
   int Mines = 0;
-  if(board[row][col].hasMine || !board[row][col].hasMine || board[row][col].hasFlag || !board[row][col].hasFlag || board[row][col].isRevealed || !board[row][col].isRevealed)
+  if(board[row][col].hasMine || !board[row][col].hasMine || board[row][col].hasFlag || !board[row][col].hasFlag || board[row][col].isRevealed /* || !board[row][col].isRevealed*/)
   {
     if(board[row-1][col].hasMine)
     Mines = Mines + 1;
@@ -60,20 +62,28 @@ int MinesweeperBoard::countMines(int row, int col) const
  return Mines;
 }
 
+bool MinesweeperBoard::hasFlag(int row, int col) const
+{
+ if(board[row][col].hasFlag)
+ return true;
+ if(!board[row][col].hasFlag || board[row][col].isRevealed /* || + wyjscie poza tablice*/)
+ return false;
+ return 0;
+}
 
 MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode) : height(h), width(w)
 {
   if(mode == EASY) 
   {
     //tu bedzie kiedys instrukcja + wiecej trybow trudnosci
+    srand(time(NULL));
+    int r1 = (rand() % h ) + 0 ;
+    int r2 = (rand() % h ) + 0 ;
     for (int y = 0; y < height; y++) 
     {
       for (int x = 0; x < width; x++) 
       {
-      board[1][1].hasMine = true;
-      board[1][2].hasMine = true;
-      board[1][0].hasMine = true;
-      board[2][1].hasMine = true;
+      board[r1][r2].hasMine = true;
       }
     }
   }
@@ -109,9 +119,16 @@ void MinesweeperBoard::debug_display() const
 int main()
 {
     MinesweeperBoard start(10, 10, EASY);
-    //intro();
+    intro();
     start.debug_display();
-    cout << start.countMines(1, 1);
+    cout << "Liczba min dookola tego pola: " << start.countMines(2, 1) << endl;
+    cout << "Liczba flag na tym polu: " << start.hasFlag(2, 1) << endl;
 }
 
 #endif
+
+      /*board[1][1].hasMine = true;
+      board[1][2].hasMine = true;
+      board[1][0].hasMine = true;
+      board[2][1].hasMine = true;
+      board[2][1].hasFlag = true;*/
