@@ -38,28 +38,24 @@ public:
 
 int MinesweeperBoard::countMines(int row, int col) const
 {
-  //trzeba napisac funkcje ktora sprawia ze nie mozna wyjsc poza border tablicy (inaczej program dla pól które graniczą z borderem podaje błędne wartości)
   int Mines = 0;
-  if(board[row][col].hasMine || !board[row][col].hasMine || board[row][col].hasFlag || !board[row][col].hasFlag || board[row][col].isRevealed /* || !board[row][col].isRevealed*/)
-  {
-    if(board[row-1][col].hasMine)
-    Mines = Mines + 1;
-    if(board[row-1][col-1].hasMine)
-    Mines = Mines + 1;
-    if(board[row-1][col+1].hasMine)
-    Mines = Mines + 1;
-    if(board[row+1][col].hasMine)
-    Mines = Mines + 1;
-    if(board[row+1][col-1].hasMine)
-    Mines = Mines + 1;
-    if(board[row+1][col+1].hasMine)
-    Mines = Mines + 1;
-    if(board[row][col-1].hasMine)
-    Mines = Mines + 1;
-    if(board[row][col+1].hasMine)
-    Mines = Mines + 1;
-  }
- return Mines;
+  if(row >=1 && board[row-1][col].hasMine)
+  Mines = Mines + 1;
+  if(row >=1 && col >=1 && board[row-1][col-1].hasMine)
+  Mines = Mines + 1;
+  if(row >=1 && col < width && board[row-1][col+1].hasMine)
+  Mines = Mines + 1;
+  if(row < width && board[row+1][col].hasMine)
+  Mines = Mines + 1;
+  if(row < width && col >=1 && board[row+1][col-1].hasMine)
+  Mines = Mines + 1;
+  if(row < height && col < width && board[row+1][col+1].hasMine)
+  Mines = Mines + 1;
+  if(col >=1 && board[row][col-1].hasMine)
+  Mines = Mines + 1;
+  if(col < width && board[row][col+1].hasMine)
+  Mines = Mines + 1;
+  return Mines;
 }
 
 bool MinesweeperBoard::hasFlag(int row, int col) const
@@ -73,9 +69,20 @@ bool MinesweeperBoard::hasFlag(int row, int col) const
 
 MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode) : height(h), width(w)
 {
- if(mode == EASY) 
  {
-   //tu bedzie kiedys instrukcja + wiecej trybow trudnosci
+   int MineAmount = height * width;
+   if(mode == EASY)
+   {
+   MineAmount = MineAmount * (0.1);
+   }
+   if(mode == NORMAL)
+   {
+   MineAmount = MineAmount * (0.2);
+   }
+   if(mode == HARD)
+   {
+   MineAmount = MineAmount * (0.3);
+   }
    for(int y = 0; y < height; y++) 
     {
      for(int x = 0; x < width; x++) 
@@ -84,14 +91,14 @@ MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode) : height(h), wid
       }
     }
    srand(time(NULL));
-   for(int t = 0; t < h; t++)
+   for(int t = 0; t < MineAmount; t++)
     {
-     int r1 = rand()%h;
-     int r2 = rand()%h;
+     int r1 = rand()%width;
+     int r2 = rand()%height;
       while(board[r1][r2].hasMine)
       {
-       r1 = rand()%h;
-       r2 = rand()%h;
+       r1 = rand()%width;
+       r2 = rand()%height;
       }
       board[r1][r2].hasMine = true;
     }
@@ -123,11 +130,9 @@ void MinesweeperBoard::debug_display() const
     }
 }
 
-
-
 int main()
 {
-    MinesweeperBoard start(20, 20, EASY);
+    MinesweeperBoard start(5, 5, HARD);
     intro();
     start.debug_display();
     cout << "Liczba min dookola tego pola: " << start.countMines(2, 1) << endl;
