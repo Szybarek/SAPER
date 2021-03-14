@@ -26,6 +26,7 @@ class MinesweeperBoard
     Field board[100][100];
     int width;
     int height;
+    int status;
 
 public:
     MinesweeperBoard(int w, int h, GameMode mode);
@@ -33,8 +34,21 @@ public:
     bool hasFlag(int row, int col) const;
     void debug_display() const;
     int getMineCount() const;
+    void toggleFlag(int row, int col, GameState status);
+    void revealField(int row, int col, GameState status);
+    GameState getGameState() const;
 };
 
+void MinesweeperBoard::toggleFlag(int row, int col, GameState status)
+{ 
+ if(status == RUNNING && !board[row][col].isRevealed)
+ {
+ if(board[row][col].hasFlag)
+ board[row][col].hasFlag = false;
+ if(!board[row][col].hasFlag)
+ board[row][col].hasFlag = true;
+ }
+}
 
 int MinesweeperBoard::countMines(int row, int col) const
 {
@@ -105,6 +119,7 @@ MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode) : height(h), wid
   }
 }
 
+
 void MinesweeperBoard::debug_display() const
 {
     for(int y = 0; y < height; y++)
@@ -130,13 +145,46 @@ void MinesweeperBoard::debug_display() const
     }
 }
 
+void MinesweeperBoard::revealField(int row, int col, GameState status)
+{
+  if(status == RUNNING && !board[row][col].isRevealed  && !board[row][col].hasFlag)
+  {
+    if(!board[row][col].hasMine)
+    board[row][col].isRevealed = true;
+    if(board[row][col].hasMine)
+    {
+      //-jezeli jest to pierwsza akcja gracza to mina zawsze znajduje sie w innym miejscu (dodac)
+      board[row][col].isRevealed = true;
+      status = FINISHED_LOSS;
+    }
+  }
+}
+
+GameState Minesweeper::getGameState()
+{
+if(status == RUNNING)
+{
+  if(status ==)
+}
+}
+
 int main()
 {
-    MinesweeperBoard start(5, 5, HARD);
+    MinesweeperBoard start(10, 10, HARD);
     intro();
+
+    start.toggleFlag(4, 4, RUNNING);
+    cout << "Liczba min dookola tego pola: " << start.countMines(4, 4) << endl;
+    cout << "Liczba flag na tym polu: " << start.hasFlag(4, 4) << endl;
+    start.revealField(2, 2, RUNNING);
     start.debug_display();
-    cout << "Liczba min dookola tego pola: " << start.countMines(2, 1) << endl;
-    cout << "Liczba flag na tym polu: " << start.hasFlag(2, 1) << endl;
+    getGameState();
+{
+if(RUNNING)
+{
+  
+}
+}
 }
 
 #endif
