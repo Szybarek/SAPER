@@ -26,20 +26,22 @@ class MinesweeperBoard
     Field board[100][100];
     int width;
     int height;
-    int status;
+    GameState status;
+    bool BeforeFirstMove;
 
 public:
-    MinesweeperBoard(int w, int h, GameMode mode);
+    MinesweeperBoard(int w, int h, GameMode mode, GameState s);
     int countMines(int row, int col) const;
     bool hasFlag(int row, int col) const;
     void debug_display() const;
     int getMineCount() const;
-    void toggleFlag(int row, int col, GameState status);
-    void revealField(int row, int col, GameState status);
-    GameState getGameState() const;
+    void toggleFlag(int row, int col);
+    void revealField(int row, int col);
+    GameState getGameState();
+    
 };
 
-void MinesweeperBoard::toggleFlag(int row, int col, GameState status)
+void MinesweeperBoard::toggleFlag(int row, int col)
 {
     if(status == RUNNING && !board[row][col].isRevealed)
     {
@@ -81,8 +83,10 @@ bool MinesweeperBoard::hasFlag(int row, int col) const
     return 0;
 }
 
-MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode) : height(h), width(w)
+//konstruktor
+MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode, GameState s) : height(h), width(w), status(s), BeforeFirstMove(true)
 {
+    s = RUNNING;
     {
         int MineAmount = height * width;
         if(mode == EASY)
@@ -104,7 +108,6 @@ MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode) : height(h), wid
                 board[x][y].hasMine = false;
             }
         }
-        srand(time(NULL));
         for(int t = 0; t < MineAmount; t++)
         {
             int r1 = rand()%width;
@@ -145,52 +148,66 @@ void MinesweeperBoard::debug_display() const
     }
 }
 
-void MinesweeperBoard::revealField(int row, int col, GameState status)
+void MinesweeperBoard::revealField(int row, int col)
 {
     if(status == RUNNING && !board[row][col].isRevealed  && !board[row][col].hasFlag)
     {
+      if(BeforeFirstMove)
+      {
+        if(board[row][col].hasMine)
+        {
+          /*int r1 = rand()%width;
+            int r2 = rand()%height;
+            while(board[r1][r2].hasMine)
+            {
+                r1 = rand()%width;
+                r2 = rand()%height;
+            }
+            board[r1][r2].hasMine = true;*/
+        }
+        BeforeFirstMove = false;
+      }
         if(!board[row][col].hasMine)
             board[row][col].isRevealed = true;
         if(board[row][col].hasMine)
         {
-            //-jezeli jest to pierwsza akcja gracza to mina zawsze znajduje sie w innym miejscu (dodac)
             board[row][col].isRevealed = true;
             status = FINISHED_LOSS;
         }
     }
 }
 
-GameState Minesweeper::getGameState()
+GameState MinesweeperBoard::getGameState()
 {
     if(status == RUNNING)
     {
-        if(status ==)
+        cout << "STATUS GRY: W TRAKCIE";
     }
+    if(status == FINISHED_LOSS)
+    {
+        cout << "STATUS GRY: PRZEGRANA";
+    }
+    if(status == FINISHED_WIN)
+    {
+        cout << "STATUS GRY: WYGRANA";
+    }
+    return status;
 }
 
 int main()
 {
-    MinesweeperBoard start(10, 10, HARD);
+    srand(time(NULL));
+    //srand(1);
+    MinesweeperBoard start(10, 10, EASY, RUNNING);
     intro();
 
-    start.toggleFlag(4, 4, RUNNING);
+    start.toggleFlag(1, 5);
+    start.toggleFlag(1, 7);
     cout << "Liczba min dookola tego pola: " << start.countMines(4, 4) << endl;
     cout << "Liczba flag na tym polu: " << start.hasFlag(4, 4) << endl;
-    start.revealField(2, 2, RUNNING);
+    start.revealField(1, 2);
     start.debug_display();
-    getGameState();
-    {
-        if(RUNNING)
-        {
-
-        }
-    }
+    start.getGameState();
 }
 
 #endif
-
-/*board[1][1].hasMine = true;
-board[1][2].hasMine = true;
-board[1][0].hasMine = true;
-board[2][1].hasMine = true;
-board[2][1].hasFlag = true;*/
