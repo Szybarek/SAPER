@@ -9,7 +9,7 @@ int main()
     cout << "Hubert Baron" << endl;
     srand(time(NULL));
     //srand(1);
-    MinesweeperBoard start(10, 10, EASY, RUNNING);
+    MinesweeperBoard start(4, 4, HARD, RUNNING);
     
     start.toggleFlag(1, 5);
     start.toggleFlag(1, 7);

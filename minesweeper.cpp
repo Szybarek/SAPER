@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//WAZNA UWAGA (ZROBIC PRYWATNA FUNKCJE FALSE,TRUE KTORA BEDZIE SPRAWDZAC CZY POLA ZNAJDUJA SIE W SRODKU PLANSZY, bedzie mozna tego uzywac praktycznie wszedzie)
 
 //konstruktor
 MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode, GameState s) : height(h), width(w), status(s), BeforeFirstMove(true)
@@ -55,6 +56,11 @@ void MinesweeperBoard::toggleFlag(int row, int col)
         if(!board[row][col].hasFlag)
             board[row][col].hasFlag = true;
     }
+}
+
+bool MinesweeperBoard::SeeIfInside()
+{
+ 
 }
 
 int MinesweeperBoard::countMines(int row, int col) const
@@ -119,18 +125,18 @@ void MinesweeperBoard::revealField(int row, int col)
 {
     if(status == RUNNING && !board[row][col].isRevealed  && !board[row][col].hasFlag)
     {
-      if(BeforeFirstMove)
+      if(BeforeFirstMove) //funkcja pierwszego ruchu, problem : czasem wywala mine poza mape
       {
-        if(board[row][col].hasMine)
+        if(board[row][col].hasMine) 
         {
-          /*int r1 = rand()%width;
-            int r2 = rand()%height;
-            while(board[r1][r2].hasMine)
-            {
-                r1 = rand()%width;
-                r2 = rand()%height;
-            }
-            board[r1][r2].hasMine = true;*/
+          int r1 = rand()%width; 
+          int r2 = rand()%height;
+          while(board[r1][r2].hasMine)
+          {
+              r1 = rand()%width;
+              r2 = rand()%height;
+          }
+              board[row][col].hasMine = false;
         }
         BeforeFirstMove = false;
       }
@@ -160,3 +166,12 @@ GameState MinesweeperBoard::getGameState()
     }
     return status;
 }
+
+/*    if(row >=1 && board[row-1][col] || row >=1 && col >=1 && board[row-1][col-1] ||
+    
+       row >=1 && col < width && board[row-1][col+1] || row < width && board[row+1][col] ||
+    
+       row < width && col >=1 && board[row+1][col-1] ||row < height && col < width && board[row+1][col+1] ||
+    
+       col >=1 && board[row][col-1] || col < width && board[row][col+1])
+    return true;*/

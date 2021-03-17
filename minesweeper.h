@@ -29,6 +29,7 @@ public:
     void toggleFlag(int row, int col);
     void revealField(int row, int col);
     GameState getGameState();
+    bool SeeIfInside()
     
 };
 
