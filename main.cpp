@@ -10,13 +10,13 @@ int main()
     srand(time(NULL));
     //srand(1);
 
-    MinesweeperBoard start(10, 10, HARD, RUNNING);
-    start.toggleFlag(1, 5);
-    start.toggleFlag(1, 7);
-    start.revealField(5, 5);
+    MinesweeperBoard start(4, 4, HARD, RUNNING);
+    start.toggleFlag(1, 1);
+    start.toggleFlag(1, 2);
+    start.revealField(1, 3);
     start.debug_display();
-    cout << "Liczba min dookola tego pola: " << start.countMines(4, 4) << endl;
-    cout << "Liczba flag na tym polu: " << start.hasFlag(4, 4) << endl;
+    cout << "Liczba min dookola tego pola: " << start.countMines(3, 3) << endl;
+    cout << "Liczba flag na tym polu: " << start.hasFlag(3, 3) << endl;
     start.getGameState();
 }
 

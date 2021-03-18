@@ -21,14 +21,14 @@ class MinesweeperBoard
 public:
     GameState status;
     bool BeforeFirstMove;
-    
+
     MinesweeperBoard(int w, int h, GameMode mode, GameState s);
-    int countMines(int row, int col) const;
-    bool hasFlag(int row, int col) const;
+    int countMines(int col, int row) const;
+    bool hasFlag(int col, int row) const;
     void debug_display() const;
     int getMineCount() const;
-    void toggleFlag(int row, int col);
-    void revealField(int row, int col);
+    void toggleFlag(int col, int row);
+    void revealField(int col, int row);
     GameState getGameState();
 };
 
