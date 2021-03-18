@@ -6,9 +6,9 @@ using namespace std;
 
 
 //konstruktor
-MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode, GameState) : height(h), width(w), status(), BeforeFirstMove(true)
-{
-    status = RUNNING;
+MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode) : height(h), width(w), state(), BeforeFirstMove(true)
+{  
+    state = RUNNING;
     {
         int MineAmount = height * width;
         if(mode == EASY)
@@ -42,13 +42,17 @@ MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode, GameState) : hei
             board[r1][r2].hasMine = true;
         }
     }
+            if(mode == DEBUG)
+        {
+            createDebugBoard();
+        }
 }
-
+ 
 
 
 void MinesweeperBoard::toggleFlag(int col, int row)
 {
-    if(status == RUNNING && !board[row][col].isRevealed)
+    if(state == RUNNING && !board[row][col].isRevealed)
     {
         if(board[col][row].hasFlag)
             board[col][row].hasFlag = false;
@@ -117,59 +121,112 @@ void MinesweeperBoard::debug_display() const
 
 void MinesweeperBoard::revealField(int col, int row)
 {
-    if(status == RUNNING && !board[col][row].isRevealed  && !board[col][row].hasFlag)
+    if(state == RUNNING && !board[col][row].isRevealed  && !board[col][row].hasFlag)
     {
-      if(BeforeFirstMove)
-      {
-        if(board[col][row].hasMine)
+        if(BeforeFirstMove)
         {
-          int r1 = rand()%width; 
-          int r2 = rand()%height;
-          while(board[r1][r2].hasMine)
-          {
-              r1 = rand()%width;
-              r2 = rand()%height;
-          }
-          board[col][row].hasMine = false;
-          board[r1][r2].hasMine = true;
+            if(board[col][row].hasMine)
+            {
+                int r1 = rand()%width;
+                int r2 = rand()%height;
+                while(board[r1][r2].hasMine)
+                {
+                    r1 = rand()%width;
+                    r2 = rand()%height;
+                }
+                board[col][row].hasMine = false;
+                board[r1][r2].hasMine = true;
+            }
+            BeforeFirstMove = false;
         }
-        BeforeFirstMove = false;
-      }
         if(!board[col][row].hasMine)
             board[col][row].isRevealed = true;
         else
         {
             board[col][row].isRevealed = true;
-            status = FINISHED_LOSS;
+            state = FINISHED_LOSS;
         }
     }
 }
 
-//if(r2 >= 0 && r2 <= height && r1 >= 0 && r1 <= width) (w planszy)
-//if(r2 < 0 && r2 > height && r1 < 0 && r1 > width) (poza plansza)
 
-GameState MinesweeperBoard::getGameState()
+bool MinesweeperBoard::getFieldInfo(int col, int row)  const
 {
-    if(status == RUNNING)
+    if(col < 0 || col > height || row < 0 || row > width)
     {
-        cout << "STATUS GRY: W TRAKCIE";
+        return '#';
     }
-    if(status == FINISHED_LOSS)
+    if(!board[col][row].isRevealed && board[col][row].hasFlag)
     {
-        cout << "STATUS GRY: PRZEGRANA";
+        return 'F';
     }
-    if(status == FINISHED_WIN)
+    if(!board[col][row].isRevealed && !board[col][row].hasFlag)
     {
-        cout << "STATUS GRY: WYGRANA";
+        return '_';
     }
-    return status;
+    if(board[col][row].isRevealed && board[col][row].hasMine)
+    {
+        return 'x';
+    }
+    /*if(getMineCount == 0)
+    {
+        return ' ';
+    }
+*/
+    return 0;
 }
 
-/*    if(row >=1 && board[row-1][col] || row >=1 && col >=1 && board[row-1][col-1] ||
-    
-       row >=1 && col < width && board[row-1][col+1] || row < width && board[row+1][col] ||
-    
-       row < width && col >=1 && board[row+1][col-1] ||row < height && col < width && board[row+1][col+1] ||
-    
-       col >=1 && board[row][col-1] || col < width && board[row][col+1])
-    return true;*/
+void MinesweeperBoard::createDebugBoard()
+{
+    for (int row = 0; row < height; ++row)
+    {
+        for (int col = 0; col < width; ++col)
+        {
+        board[col][row].hasMine=false;
+            if (row == col || row == 0 || (col == 0 && row % 2 == 0))
+                board[col][row].hasMine = true;
+        }
+    }
+}
+
+
+GameState MinesweeperBoard::getGameState() const
+{
+    return state;
+}
+
+int MinesweeperBoard::getBoardWidth() const
+{
+    return width;
+}
+
+int MinesweeperBoard::getBoardHeight() const
+{
+    return height;
+}
+
+/*int MinesweeperBoard::getMineCount() const
+{
+return Mines;
+}
+*/
+
+
+
+GameState MinesweeperBoard::showGameState()
+{
+    if(state == RUNNING)
+    {
+        cout << "STATUS GRY: W TRAKCIE " << endl;
+    }
+    if(state == FINISHED_LOSS)
+    {
+        cout << "STATUS GRY: PRZEGRANA " << endl;
+    }
+    if(state == FINISHED_WIN)
+    {
+        cout << "STATUS GRY: WYGRANA " << endl;
+    }
+    return state;
+}
+

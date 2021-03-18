@@ -6,17 +6,17 @@ using namespace std;
 
 int main()
 {
+    //srand(1);
+    //start.toggleFlag(1, 1);
+    //start.toggleFlag(2, 2);
+    //start.revealField(1, 3);
+    //start.showGameState();
+    //start.countMines(3, 3);
+    //start.hasFlag(3, 3);
     cout << "Hubert Baron" << endl;
     srand(time(NULL));
-    //srand(1);
-
-    MinesweeperBoard start(4, 4, HARD, RUNNING);
-    start.toggleFlag(1, 1);
-    start.toggleFlag(1, 2);
-    start.revealField(1, 3);
+    MinesweeperBoard start(10, 10, DEBUG);
     start.debug_display();
-    cout << "Liczba min dookola tego pola: " << start.countMines(3, 3) << endl;
-    cout << "Liczba flag na tym polu: " << start.hasFlag(3, 3) << endl;
-    start.getGameState();
+    start.getFieldInfo(11, 11);
 }
 
