@@ -1,15 +1,14 @@
 #include <iostream>
-#include "minesweeper.h"
+#include "MinesweeperBoard.h"
 #include<ctime>
 
 using namespace std;
 
-//WAZNA UWAGA (ZROBIC PRYWATNA FUNKCJE FALSE,TRUE KTORA BEDZIE SPRAWDZAC CZY POLA ZNAJDUJA SIE W SRODKU PLANSZY, bedzie mozna tego uzywac praktycznie wszedzie)
 
 //konstruktor
-MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode, GameState s) : height(h), width(w), status(s), BeforeFirstMove(true)
+MinesweeperBoard::MinesweeperBoard(int w, int h, GameMode mode, GameState) : height(h), width(w), status(), BeforeFirstMove(true)
 {
-    s = RUNNING;
+    status = RUNNING;
     {
         int MineAmount = height * width;
         if(mode == EASY)
@@ -58,10 +57,7 @@ void MinesweeperBoard::toggleFlag(int row, int col)
     }
 }
 
-bool MinesweeperBoard::SeeIfInside()
-{
- 
-}
+
 
 int MinesweeperBoard::countMines(int row, int col) const
 {
@@ -89,12 +85,10 @@ bool MinesweeperBoard::hasFlag(int row, int col) const
 {
     if(board[row][col].hasFlag)
         return true;
-    if(!board[row][col].hasFlag || board[row][col].isRevealed /* || + wyjscie poza tablice*/)
+    if(!board[row][col].hasFlag || board[row][col].isRevealed || col >= 0 || col <= height || row >= 0 || row <= width)
         return false;
     return 0;
 }
-
-
 
 void MinesweeperBoard::debug_display() const
 {
@@ -125,9 +119,9 @@ void MinesweeperBoard::revealField(int row, int col)
 {
     if(status == RUNNING && !board[row][col].isRevealed  && !board[row][col].hasFlag)
     {
-      if(BeforeFirstMove) //funkcja pierwszego ruchu, problem : czasem wywala mine poza mape
+      if(BeforeFirstMove)
       {
-        if(board[row][col].hasMine) 
+        if(board[row][col].hasMine)
         {
           int r1 = rand()%width; 
           int r2 = rand()%height;
@@ -136,19 +130,23 @@ void MinesweeperBoard::revealField(int row, int col)
               r1 = rand()%width;
               r2 = rand()%height;
           }
-              board[row][col].hasMine = false;
+          board[row][col].hasMine = false;
+          board[r1][r2].hasMine = true;
         }
         BeforeFirstMove = false;
       }
         if(!board[row][col].hasMine)
             board[row][col].isRevealed = true;
-        if(board[row][col].hasMine)
+        else
         {
             board[row][col].isRevealed = true;
             status = FINISHED_LOSS;
         }
     }
 }
+
+//if(r2 >= 0 && r2 <= height && r1 >= 0 && r1 <= width) (w planszy)
+//if(r2 < 0 && r2 > height && r1 < 0 && r1 > width) (poza plansza)
 
 GameState MinesweeperBoard::getGameState()
 {

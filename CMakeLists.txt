@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.10)
 project (SAPER)
 #####################################################################
 # Tu wymień wszystkie pliki .cpp, z których składa się projekt (rozdzielone spacją)
-set ( SOURCES main.cpp minesweeper.cpp minesweeper.h)
+set ( SOURCES main.cpp MinesweeperBoard.cpp MinesweeperBoard.h)
 #####################################################################
 # Dalej na razie nic nie trzeba zmieniać
 # przy każdej kompilacji używaj:
