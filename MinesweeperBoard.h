@@ -19,14 +19,15 @@ class MinesweeperBoard
     int height;
     GameState state;
     bool BeforeFirstMove;
+    int MineAmount;
 
 public:
     MinesweeperBoard(int w, int h, GameMode mode);
-    bool hasFlag(int col, int row) const;
-    void debug_display() const;
-    int countMines(int col, int row) const;
-    void toggleFlag(int col, int row);
-    void revealField(int col, int row);
+    bool hasFlag(int row, int col) const;
+    void debugDisplay() const;
+    int countMines(int row, int col) const;
+    void toggleFlag(int row, int col);
+    void revealField(int row, int col);
     bool getFieldInfo(int row, int col) const;
     GameState getGameState() const;
     GameState showGameState();

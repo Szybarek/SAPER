@@ -7,16 +7,27 @@ using namespace std;
 int main()
 {
     //srand(1);
-    //start.toggleFlag(1, 1);
-    //start.toggleFlag(2, 2);
-    //start.revealField(1, 3);
-    //start.showGameState();
-    //start.countMines(3, 3);
-    //start.hasFlag(3, 3);
     cout << "Hubert Baron" << endl;
     srand(time(NULL));
-    MinesweeperBoard start(10, 10, DEBUG);
-    start.debug_display();
-    start.getFieldInfo(11, 11);
+
+    //konstruktor
+    MinesweeperBoard start(3, 4, EASY);
+
+    //wyswietlenie flagi na danym polu
+    start.toggleFlag(1, 2);
+
+    //odsłonięcie danego pola
+    start.revealField(1, 0);
+    
+    //wyswietlenie calej tablicy
+    start.debugDisplay();
+
+
+    cout << "informacja o polu: " << start.getFieldInfo(0, 0) << endl;
+    cout << "ilosc min dookola danego pola (3,3): " << start.countMines(3, 3) << endl;
+    cout << "Status gry: " << start.showGameState() << endl;
+    cout << "czy na tym polu jest flaga?" << start.hasFlag(3, 3) << endl;
+    
+    
 }
 
