@@ -5,15 +5,15 @@
 
 class MSBoardTextView
 {
-	int width;
-	int height;
-	GameState state;
-	MinesweeperBoard& displayableBoard;
+    int width;
+    int height;
+    GameState state;
+    MinesweeperBoard& displayableBoard;
 
 public:
-	MSBoardTextView(MinesweeperBoard& start);
+    MSBoardTextView(MinesweeperBoard& start);
 
-	void display();
+    void display();
 };
 
 #endif

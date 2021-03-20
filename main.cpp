@@ -25,23 +25,27 @@ int main()
     start.revealField(1, 2);
     start.revealField(0, 1);
     start.revealField(2, 2);
-    
+
     //wyswietlenie flagi na danym polu
     start.toggleFlag(0, 1);
     start.toggleFlag(1, 1);
-    //cout << "ilosc min dookola danego pola (2,2): " << start.countMines(2, 2) << endl;
-    //cout << "Status gry: " << start.showGameState();
-    //cout << "czy na tym polu jest flaga?: " << start.hasFlag(4, 5) << endl;
-    //cout << "informacja o polu: " << start.getFieldInfo(4, 5) << endl;
-    
+
+
     //wyswietlenie surowej tablicy
     cout << "debug view" <<endl;
     start.debugDisplay();
+
     //wyswietlenie tablicy dla uzytkownika
     cout << "user view" <<endl;
     view.display();
-    
+
+    //status gry;
     cout <<endl;
-    cout << "STATUS GRY: " << start.showGameState();
+    cout << "STATUS GRY: " << start.showGameState() <<endl;;
+
+    //cout << "ilosc min dookola danego pola (2,2): " << start.countMines(2, 2) << endl;
+    //cout << "Status gry: " << start.showGameState();
+    //cout << "czy na tym polu jest flaga?: " << start.hasFlag(4, 5) << endl;
+    //cout << "informacja o polu: " << start.getFieldInfo(1, 1) << endl;
 }
 

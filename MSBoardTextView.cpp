@@ -65,13 +65,13 @@ void MSBoardTextView::display()
     {
         for (int col = 0; col < width; ++col)
         {
-           
+
             if (!displayableBoard.isRevealed(row,col))
             {
-            if(displayableBoard.hasFlag(row, col))
-            cout << "[F]";
-            else
-            cout << "[?]";
+                if(displayableBoard.hasFlag(row, col))
+                    cout << "[F]";
+                else
+                    cout << "[?]";
             }
             if (displayableBoard.hasMine(row, col) && displayableBoard.isRevealed(row,col))
             {

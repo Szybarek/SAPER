@@ -119,7 +119,7 @@ void MinesweeperBoard::debugDisplay() const //done
     }
 }
 
-bool MinesweeperBoard::WinCondition() //done 
+bool MinesweeperBoard::WinCondition() //done
 {
     int safeField = 0;
     for (int row = 0; row < height; ++row)
@@ -130,7 +130,7 @@ bool MinesweeperBoard::WinCondition() //done
                 safeField++;
         }
     }
-    if(safeField + MineAmount == width * height) 
+    if(safeField + MineAmount == width * height)
         return true;
     return false;
 }

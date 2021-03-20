@@ -14,7 +14,7 @@ struct Field
 
 class MinesweeperBoard
 {
-    Field board[100][100]{};
+    Field board[100][100];
     int width;
     int height;
     GameState state;
