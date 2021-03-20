@@ -1,6 +1,5 @@
 #include <iostream>
 #include "MinesweeperBoard.h"
-#include<ctime>
 
 using namespace std;
 
@@ -120,7 +119,7 @@ void MinesweeperBoard::debugDisplay() const //done
     }
 }
 
-bool MinesweeperBoard::WinCondition() //done
+bool MinesweeperBoard::WinCondition() //done 
 {
     int safeField = 0;
     for (int row = 0; row < height; ++row)
@@ -201,13 +200,17 @@ bool MinesweeperBoard::getFieldInfo(int row, int col)  const //done
 
 void MinesweeperBoard::createDebugBoard() //done
 {
+    MineAmount = 0;
     for (int row = 0; row < height; ++row)
     {
         for (int col = 0; col < width; ++col)
         {
             board[row][col].hasMine=false;
             if (row == col || row == 0 || (col == 0 && row % 2 == 0))
+            {
                 board[row][col].hasMine = true;
+                MineAmount++;
+            }
         }
     }
 }
@@ -233,8 +236,19 @@ int MinesweeperBoard::getMineCount() const
     return MineAmount;
 }
 
+bool MinesweeperBoard::isRevealed(int row, int col) const
+{
+    if (board[row][col].isRevealed)
+        return true;
+    return false;
+}
 
-
+bool MinesweeperBoard::hasMine(int row, int col) const
+{
+    if (board[row][col].hasMine)
+        return true;
+    return false;
+}
 
 GameState MinesweeperBoard::showGameState() //additional
 {

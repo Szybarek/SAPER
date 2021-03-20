@@ -1,8 +1,8 @@
-enum GameMode  { DEBUG, EASY, NORMAL, HARD };
-enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
-
 #ifndef MINESBOARD_H__
 #define MINESBOARD_H__
+
+enum GameMode  { DEBUG, EASY, NORMAL, HARD };
+enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
 
 
 struct Field
@@ -14,7 +14,7 @@ struct Field
 
 class MinesweeperBoard
 {
-    Field board[100][100];
+    Field board[100][100]{};
     int width;
     int height;
     GameState state;
@@ -22,6 +22,8 @@ class MinesweeperBoard
     int MineAmount;
 
 public:
+    bool hasMine(int row, int col) const;
+    bool isRevealed(int row, int col) const; //d
     MinesweeperBoard(int w, int h, GameMode mode); //d
     bool hasFlag(int row, int col) const; //d
     void debugDisplay() const; //d
@@ -35,7 +37,7 @@ public:
     int getBoardHeight() const; //d
     int getMineCount() const; //d
     void createDebugBoard(); //d
-    bool WinCondition();
+    bool WinCondition(); //d
 };
 
 #endif
