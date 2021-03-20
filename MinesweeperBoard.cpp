@@ -6,12 +6,12 @@ using namespace std;
 
 
 //konstruktor
-MinesweeperBoard::MinesweeperBoard(int h, int w, GameMode mode) : height(h), width(w), state(), MineAmount(), BeforeFirstMove(true)
-{  
+MinesweeperBoard::MinesweeperBoard(int h, int w, GameMode mode) : height(h), width(w), state(), MineAmount(), BeforeFirstMove(true) //done
+{
     MineAmount = 0;
     state = RUNNING;
     {
-        int MineAmount = width * height;
+        MineAmount = width * height;
         if(mode == EASY)
         {
             MineAmount = MineAmount * (0.1);
@@ -43,15 +43,15 @@ MinesweeperBoard::MinesweeperBoard(int h, int w, GameMode mode) : height(h), wid
             board[r1][r2].hasMine = true;
         }
     }
-            if(mode == DEBUG)
-        {
-            createDebugBoard();
-        }
+    if(mode == DEBUG)
+    {
+        createDebugBoard();
+    }
 }
- 
 
 
-void MinesweeperBoard::toggleFlag(int row, int col)
+
+void MinesweeperBoard::toggleFlag(int row, int col) //done
 {
     if(state == RUNNING && !board[row][col].isRevealed)
     {
@@ -64,7 +64,7 @@ void MinesweeperBoard::toggleFlag(int row, int col)
 
 
 
-int MinesweeperBoard::countMines(int row, int col) const
+int MinesweeperBoard::countMines(int row, int col) const //done
 {
     int Mines = 0;
     if(row >=1 && board[row-1][col].hasMine)
@@ -86,7 +86,7 @@ int MinesweeperBoard::countMines(int row, int col) const
     return Mines;
 }
 
-bool MinesweeperBoard::hasFlag(int row, int col) const
+bool MinesweeperBoard::hasFlag(int row, int col) const //done
 {
     if(board[row][col].hasFlag)
         return true;
@@ -95,7 +95,7 @@ bool MinesweeperBoard::hasFlag(int row, int col) const
     return 0;
 }
 
-void MinesweeperBoard::debugDisplay() const
+void MinesweeperBoard::debugDisplay() const //done
 {
     for(int row = 0; row < height; row++)
     {
@@ -120,7 +120,23 @@ void MinesweeperBoard::debugDisplay() const
     }
 }
 
-void MinesweeperBoard::revealField(int row, int col)
+bool MinesweeperBoard::WinCondition() //done
+{
+    int safeField = 0;
+    for (int row = 0; row < height; ++row)
+    {
+        for (int col = 0; col < width; ++col)
+        {
+            if(!board[row][col].hasMine && board[row][col].isRevealed)
+                safeField++;
+        }
+    }
+    if(safeField + MineAmount == width * height) 
+        return true;
+    return false;
+}
+
+void MinesweeperBoard::revealField(int row, int col) //done
 {
     if(state == RUNNING && !board[row][col].isRevealed  && !board[row][col].hasFlag)
     {
@@ -148,11 +164,12 @@ void MinesweeperBoard::revealField(int row, int col)
             state = FINISHED_LOSS;
         }
     }
-    //+ warunek na wygrana
+    if(WinCondition())
+        state = FINISHED_WIN;
 }
 
 
-bool MinesweeperBoard::getFieldInfo(int row, int col)  const
+bool MinesweeperBoard::getFieldInfo(int row, int col)  const //done
 {
     if(row < 0 || row > height || col < 0 || col > width)
     {
@@ -170,30 +187,33 @@ bool MinesweeperBoard::getFieldInfo(int row, int col)  const
     {
         return 'x';
     }
-    /*if(getMineCount == 0)
+    if(board[row][col].isRevealed && countMines(row, col) <= 0)
     {
         return ' ';
     }
-*/
-  return 0;
+    if(board[row][col].isRevealed && countMines(row, col) > 0)
+    {
+        countMines(row,col);
+    }
+
+    return 0;
 }
 
-void MinesweeperBoard::createDebugBoard()
+void MinesweeperBoard::createDebugBoard() //done
 {
     for (int row = 0; row < height; ++row)
     {
         for (int col = 0; col < width; ++col)
         {
-        board[col][row].hasMine=false;
+            board[row][col].hasMine=false;
             if (row == col || row == 0 || (col == 0 && row % 2 == 0))
-                board[col][row].hasMine = true;
+                board[row][col].hasMine = true;
         }
     }
-    //+
 }
 
 
-GameState MinesweeperBoard::getGameState() const
+GameState MinesweeperBoard::getGameState() const //done
 {
     return state;
 }
@@ -210,13 +230,13 @@ int MinesweeperBoard::getBoardHeight() const
 
 int MinesweeperBoard::getMineCount() const
 {
-return MineAmount;
+    return MineAmount;
 }
 
 
 
 
-GameState MinesweeperBoard::showGameState()
+GameState MinesweeperBoard::showGameState() //additional
 {
     if(state == RUNNING)
     {
