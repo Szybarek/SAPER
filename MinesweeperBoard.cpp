@@ -89,7 +89,8 @@ bool MinesweeperBoard::hasFlag(int row, int col) const //done
 {
     if(board[row][col].hasFlag)
         return true;
-    if(!board[row][col].hasFlag || board[row][col].isRevealed || row >= 0 || row <= height || col >= 0 || col <= width)
+    //if(!board[row][col].hasFlag || board[row][col].isRevealed || row >= 0 || row <= height || col >= 0 || col <= width)
+    else
         return false;
     return 0;
 }
@@ -194,7 +195,6 @@ bool MinesweeperBoard::getFieldInfo(int row, int col)  const //done
     {
         countMines(row,col);
     }
-
     return 0;
 }
 
@@ -264,6 +264,6 @@ GameState MinesweeperBoard::showGameState() //additional
     {
         cout << "WYGRANA " << endl;
     }
-    return state;
+    return RUNNING;
 }
 

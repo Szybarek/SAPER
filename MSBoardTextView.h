@@ -11,7 +11,7 @@ class MSBoardTextView
     MinesweeperBoard& displayableBoard;
 
 public:
-    MSBoardTextView(MinesweeperBoard& start);
+    MSBoardTextView(MinesweeperBoard& board);
 
     void display();
 };

@@ -14,38 +14,40 @@ int main()
     //srand(time(NULL));
 
     //konstruktor
-    MinesweeperBoard start(3, 3, HARD);
-    MSBoardTextView view(start);
-
+    MinesweeperBoard board(3, 3, HARD);
+    MSBoardTextView view(board);
+    MSTextController ctrl(board, view);
     //odsłonięcie danego pola
-    start.revealField(0, 0);
-    start.revealField(1, 0);
-    start.revealField(2, 0);
-    start.revealField(2, 1);
-    start.revealField(1, 2);
-    start.revealField(0, 1);
-    start.revealField(2, 2);
+    board.revealField(0, 0);
+    board.revealField(1, 0);
+    board.revealField(2, 0);
+    board.revealField(2, 1);
+    board.revealField(1, 2);
+    board.revealField(2, 2);
+    //board.revealField(0, 2); //wygrana
+    //board.revealField(0, 1); //przegrana
 
     //wyswietlenie flagi na danym polu
-    start.toggleFlag(0, 1);
-    start.toggleFlag(1, 1);
+    board.toggleFlag(1, 1);
+    board.revealField(1, 1); // mina nie wybuchnie gdyz postawilismy tam flage
 
 
     //wyswietlenie surowej tablicy
     cout << "debug view" <<endl;
-    start.debugDisplay();
+    board.debugDisplay();
 
     //wyswietlenie tablicy dla uzytkownika
     cout << "user view" <<endl;
+    ctrl.play
     view.display();
+    
 
     //status gry;
     cout <<endl;
-    cout << "STATUS GRY: " << start.showGameState() <<endl;;
+    cout << "STATUS GRY: " << board.showGameState() <<endl;
 
-    //cout << "ilosc min dookola danego pola (2,2): " << start.countMines(2, 2) << endl;
-    //cout << "Status gry: " << start.showGameState();
-    //cout << "czy na tym polu jest flaga?: " << start.hasFlag(4, 5) << endl;
-    //cout << "informacja o polu: " << start.getFieldInfo(1, 1) << endl;
+    //cout << "ilosc min dookola danego pola (0,0): " << board.countMines(0, 0) << endl;
+    //cout << "czy na tym polu jest flaga?: " << board.hasFlag(0, 1) << endl;
+    //cout << "informacja o polu: " << board.getFieldInfo(1, 1) << endl;
 }
 

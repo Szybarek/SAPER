@@ -22,7 +22,7 @@ class MinesweeperBoard
     int MineAmount;
 
 public:
-    bool hasMine(int row, int col) const;
+    bool hasMine(int row, int col) const; //d
     bool isRevealed(int row, int col) const; //d
     MinesweeperBoard(int w, int h, GameMode mode); //d
     bool hasFlag(int row, int col) const; //d
