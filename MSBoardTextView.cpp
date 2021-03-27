@@ -8,11 +8,11 @@ MSBoardTextView::MSBoardTextView(MinesweeperBoard& board) : displayableBoard(boa
 {
     height = board.getBoardHeight();
     width = board.getBoardWidth();
-    state = board.getGameState();
 }
 
 void MSBoardTextView::display()
 {
+    GameState state = displayableBoard.getGameState();
     for (int row = 0; row < height; ++row)
     {
         for (int col = 0; col < width; ++col)
