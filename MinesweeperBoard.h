@@ -4,6 +4,7 @@
 enum GameMode  { DEBUG, EASY, NORMAL, HARD };
 enum GameState { RUNNING, FINISHED_WIN, FINISHED_LOSS };
 
+#include "Array2D.h"
 
 struct Field
 {
@@ -14,7 +15,8 @@ struct Field
 
 class MinesweeperBoard
 {
-    Field board[100][100];
+    //Field board[100][100];
+    Array2D<Field> board;
     int width;
     int height;
     GameState state;
@@ -30,7 +32,7 @@ public:
     int countMines(int row, int col) const; //d
     void toggleFlag(int row, int col); //d
     void revealField(int row, int col); //d
-    bool getFieldInfo(int row, int col) const; //d
+    char getFieldInfo(int row, int col) const; //d
     GameState getGameState() const; //nd
     GameState showGameState(); //d
     int getBoardWidth() const; //d

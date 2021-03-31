@@ -7,14 +7,14 @@
 
 class MSTextController
 {
-int height;
-int width;
-MinesweeperBoard& debugBoard;
-MSBoardTextView& playerBoard;
+    int height;
+    int width;
+    MinesweeperBoard& debugBoard;
+    MSBoardTextView& playerBoard;
 
 public:
-MSTextController(MinesweeperBoard& board, MSBoardTextView& view); 
-void play();
+    MSTextController(MinesweeperBoard& board, MSBoardTextView& view);
+    void play();
 };
 
 #endif
