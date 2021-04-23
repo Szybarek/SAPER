@@ -11,8 +11,8 @@ MSTextController::MSTextController(MinesweeperBoard& board, MSBoardTextView& vie
 
 void MSTextController::play()
 {
-    while(true)
-    {
+
+        cout<< endl;
         cout << "debug view" << endl; //do testow
         debugBoard.debugDisplay(); //do testow
         cout << endl;
@@ -21,10 +21,10 @@ void MSTextController::play()
         cout << endl;
         cout << "STATUS GRY: " << debugBoard.showGameState();
         //gra sie skonczyla
-        if(debugBoard.getGameState() != RUNNING)
+       /* if(debugBoard.getGameState() != RUNNING)
         {
             break;
-        }
+        }*/
         char choice;
         int row;
         int col;
@@ -45,9 +45,8 @@ void MSTextController::play()
             cin >> row >> col;
             debugBoard.revealField(row, col);
         }
-    }
-}
+  }
+
 
 //problemy
-// po postawieniu flagi nie da sie jej usunac
 // w konsole mozna wpisac cokolwiek

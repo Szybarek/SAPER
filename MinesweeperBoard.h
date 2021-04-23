@@ -24,9 +24,9 @@ class MinesweeperBoard
     int MineAmount;
 
 public:
+    MinesweeperBoard(int w, int h, GameMode mode); //d
     bool hasMine(int row, int col) const; //d
     bool isRevealed(int row, int col) const; //d
-    MinesweeperBoard(int w, int h, GameMode mode); //d
     bool hasFlag(int row, int col) const; //d
     void debugDisplay() const; //d
     int countMines(int row, int col) const; //d
@@ -40,6 +40,7 @@ public:
     int getMineCount() const; //d
     void createDebugBoard(); //d
     bool WinCondition(); //d
+    
 };
 
 #endif

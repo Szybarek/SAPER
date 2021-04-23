@@ -1,44 +1,22 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 
-// to powinno być w osobnych plikach !
-
-class MinesweeperBoard
-{
-
-};
-
-class MSSFMLView
-{
-	MinesweeperBoard & board;
-public:
-	explicit MSSFMLView(MinesweeperBoard & b);
-
-	void draw (sf::RenderWindow & win);
-};
-
-MSSFMLView::MSSFMLView(MinesweeperBoard & b) : board(b) {}
-
-void MSSFMLView::draw (sf::RenderWindow & win)
-{
-	// tu robimy rysowanie planszy na podstawie zawartości "board"
-	
-	sf::RectangleShape r;
-	r.setSize ( sf::Vector2f(10, 10) ) ;
-	r.setFillColor ( sf::Color::Red );
-	r.setPosition(100,100);
-	win.draw(r);
-}
+#include "MinesweeperBoard.h"
+#include "MSBoardTextView.h"
+#include "MSTextController.h"
+#include "MSSFMLView.h"
 
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Grafika w C++/SFML");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "HUBERT BARON - SAPER");
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(1);
 
-    MinesweeperBoard board;
-	MSSFMLView view(board);
+    MinesweeperBoard board(10, 10, DEBUG);
+	  MSSFMLView SFMLview(board); //graficzny
+    MSBoardTextView TEXTview(board); //tekstowy
+    MSTextController ctrl(board, TEXTview);
 
     while (window.isOpen())
     {
@@ -49,10 +27,11 @@ int main()
                 window.close();
         }
         
-        window.clear();
-        view.draw(window);
-        window.display();
-    }
+        window.clear(); 
+        SFMLview.draw(window); //narysowanie
+        window.display(); //wyswietlenie
 
+        ctrl.play();
+    }
   return 0;
 } 
