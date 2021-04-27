@@ -18,6 +18,9 @@ public:
 
     explicit MSSFMLView(MinesweeperBoard &board);
     void draw (sf::RenderWindow & win);
+    void left_button();
+    void right_button();
+    void mouse_button();
 };
 
 #endif

@@ -18,8 +18,3 @@ public:
 };
 
 #endif
-
-//OPCJE
-//wybierz rozmiar tablicy od 0 do 100;
-//wybierz poziom trudnosci
-//GRAJ

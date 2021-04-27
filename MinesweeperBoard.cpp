@@ -84,6 +84,7 @@ int MinesweeperBoard::countMines(int boardRow, int boardCol) const
     return Mines;
 }
 
+
 bool MinesweeperBoard::hasFlag(int row, int col) const //done
 {
     if(board[row][col].hasFlag)

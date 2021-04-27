@@ -48,5 +48,3 @@ void MSTextController::play()
   }
 
 
-//problemy
-// w konsole mozna wpisac cokolwiek
