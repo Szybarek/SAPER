@@ -46,33 +46,6 @@ void MSSFMLView::draw (sf::RenderWindow & win)
     MSboard.setPosition(0, 0);
     win.draw(MSboard);
 
-    sf::Event event;
-    int x=event.mouseButton.x;
-    int y=event.mouseButton.y;
-
-    while (win.pollEvent(event)) //sprawdzenie eventu
-    {
-        if( sf::Event::Closed)
-        {
-            win.close();
-        }
-        
-        if
-                (event.mouseButton.button == sf::Mouse::Right)
-        {
-            std::cout << "the right button was pressed" << std::endl;
-            std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-            std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-            //graphicBoard.toggleFlag(x, y);
-        }
-        else if (event.mouseButton.button == sf::Mouse::Left)
-        {
-            std::cout << "the left button was pressed" << std::endl;
-            std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-            std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-            //graphicBoard.revealField(x, y);
-        }
-    }
 
     for (int row = 0; row < height; ++row)
     {

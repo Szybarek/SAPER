@@ -3,6 +3,9 @@
 
 #include "MinesweeperBoard.h"
 #include "MSBoardTextView.h"
+#include "SFML/Graphics.hpp"
+#include "SFML/Window.hpp"
+#include "MSSFMLView.h"
 
 
 class MSTextController
@@ -14,7 +17,7 @@ class MSTextController
 
 public:
     MSTextController(MinesweeperBoard& board, MSBoardTextView& view);
-    void play();
+    void play(sf::RenderWindow & win, MinesweeperBoard& board);
 };
 
 #endif

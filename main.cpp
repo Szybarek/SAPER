@@ -12,21 +12,17 @@ int main()
     window.setVerticalSyncEnabled(false);
     window.setFramerateLimit(1);
 
-    MinesweeperBoard board(3, 3, HARD);
+    MinesweeperBoard board(5, 5, HARD);
 	  MSSFMLView SFMLview(board); //graficzny
     MSBoardTextView TEXTview(board); //tekstowy
     MSTextController ctrl(board, TEXTview);
-
-
     while (window.isOpen())
     {
      
           window.clear(); 
           SFMLview.draw(window); //narysowanie
-          //SFMLview.Event(window);
           window.display(); //wyswietlenie
-
-          ctrl.play();
+          ctrl.play(window, board);
     }
   return 0;
 } 
