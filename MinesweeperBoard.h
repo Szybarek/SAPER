@@ -40,7 +40,7 @@ public:
     int getMineCount() const; //d
     void createDebugBoard(); //d
     bool WinCondition(); //d
-    
+
 };
 
 #endif

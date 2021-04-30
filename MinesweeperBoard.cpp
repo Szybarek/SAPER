@@ -90,7 +90,7 @@ bool MinesweeperBoard::hasFlag(int row, int col) const //done
     if(board[row][col].hasFlag)
         return true;
     //if(!board[row][col].hasFlag || board[row][col].isRevealed || row >= 0 || row <= height || col >= 0 || col <= width)
-        return false;
+    return false;
     return 0;
 }
 
